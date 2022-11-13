@@ -274,6 +274,100 @@ public class NightscoutService {
         
         return try await httpClient.execute(request, timeout: .seconds(60))
     }
+    
+    
+    public func cancelOverride() async throws -> HTTPClientResponse {
+        
+        guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
+            throw NightscoutServiceError.URLFormationError
+        }
+        
+        let secret = sha1Secret()
+
+        let path = "/api/v2/notifications/loop"
+        urlComponents.path = path
+        
+        let url = urlComponents.url!
+        var request = HTTPClientRequest(url: url.absoluteString)
+        request.method = .POST
+        request.headers.add(name: "Content-Type", value: "application/json")
+        request.headers.add(name: "api-secret", value: secret)
+
+        let jsonDict: [String: String] = [
+            "eventType":"Temporary Override Cancel",
+            "duration":"0"
+        ]
+        
+        let postData = try! JSONEncoder().encode(jsonDict)
+        let postLength = "\(postData.count)"
+        request.headers.add(name: "Content-Length", value: postLength)
+        request.body = .bytes(ByteBuffer(data: postData))
+        
+        return try await httpClient.execute(request, timeout: .seconds(60))
+    }
+    
+    public func deliverBolus(amountInUnits: Double, otp: Int) async throws -> HTTPClientResponse {
+        
+        guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
+            throw NightscoutServiceError.URLFormationError
+        }
+        
+        let secret = sha1Secret()
+
+        let path = "/api/v2/notifications/loop"
+        urlComponents.path = path
+        
+        let url = urlComponents.url!
+        var request = HTTPClientRequest(url: url.absoluteString)
+        request.method = .POST
+        request.headers.add(name: "Content-Type", value: "application/json")
+        request.headers.add(name: "api-secret", value: secret)
+
+        let jsonDict: [String: String] = [
+            "eventType":"Remove Bolus",
+            "remoteBolus":"\(amountInUnits)",
+            "otp":"\(otp)"
+        ]
+        
+        let postData = try! JSONEncoder().encode(jsonDict)
+        let postLength = "\(postData.count)"
+        request.headers.add(name: "Content-Length", value: postLength)
+        request.body = .bytes(ByteBuffer(data: postData))
+        
+        return try await httpClient.execute(request, timeout: .seconds(60))
+    }
+    
+    public func deliverCarbs(amountInGrams: Int, amountInHours: Float, otp: Int) async throws -> HTTPClientResponse {
+        
+        guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
+            throw NightscoutServiceError.URLFormationError
+        }
+        
+        let secret = sha1Secret()
+
+        let path = "/api/v2/notifications/loop"
+        urlComponents.path = path
+        
+        let url = urlComponents.url!
+        var request = HTTPClientRequest(url: url.absoluteString)
+        request.method = .POST
+        request.headers.add(name: "Content-Type", value: "application/json")
+        request.headers.add(name: "api-secret", value: secret)
+
+        let jsonDict: [String: String] = [
+            "eventType":"Remove Carbs Entry",
+            "remoteCarbs":"\(amountInGrams)",
+            "remoteAbsorption":"\(amountInHours)",
+            "otp":"\(otp)"
+        ]
+        
+        let postData = try! JSONEncoder().encode(jsonDict)
+        let postLength = "\(postData.count)"
+        request.headers.add(name: "Content-Length", value: postLength)
+        request.body = .bytes(ByteBuffer(data: postData))
+        
+        return try await httpClient.execute(request, timeout: .seconds(60))
+    }
 
     func dateFormatter() -> DateFormatter {
         let dateFormatter = DateFormatter()

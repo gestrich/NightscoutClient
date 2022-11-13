@@ -20,6 +20,8 @@ public struct NightscoutLoopSettings: Codable {
 
 public struct NightscoutOverridePreset: Codable {
     public let name: String
+    public let symbol: String
+    public let duration: Int
 }
         
         
