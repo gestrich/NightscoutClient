@@ -9,7 +9,7 @@ import Foundation
 
 public struct NightscoutProfile: Codable {
     public let startDate: String
-    public let loopSettings: NightscoutLoopSettings
+    public let loopSettings: NightscoutLoopSettings?
 }
 
 public struct NightscoutLoopSettings: Codable {
