@@ -15,6 +15,7 @@ public struct NightscoutProfile: Codable {
 public struct NightscoutLoopSettings: Codable {
     public let maximumBasalRatePerHour: Double
     public let overridePresets: [NightscoutOverridePreset]
+    public let scheduleOverride: NightscoutOverridePreset?
 }
 
 public struct NightscoutOverridePreset: Codable {
