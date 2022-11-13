@@ -324,7 +324,7 @@ public class NightscoutService {
         request.headers.add(name: "api-secret", value: secret)
 
         let jsonDict: [String: String] = [
-            "eventType":"Remove Bolus",
+            "eventType":"Remote Bolus Entry",
             "remoteBolus":"\(amountInUnits)",
             "otp":"\(otp)"
         ]
@@ -355,7 +355,7 @@ public class NightscoutService {
         request.headers.add(name: "api-secret", value: secret)
 
         let jsonDict: [String: String] = [
-            "eventType":"Remove Carbs Entry",
+            "eventType":"Remote Carbs Entry",
             "remoteCarbs":"\(amountInGrams)",
             "remoteAbsorption":"\(amountInHours)",
             "otp":"\(otp)"
