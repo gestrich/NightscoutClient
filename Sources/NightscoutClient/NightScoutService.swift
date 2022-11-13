@@ -219,6 +219,29 @@ public class NightscoutService {
         return String(digest.description.split(separator: " ").last ?? "")
     }
     
+    public func getProfiles() async throws -> [NightscoutProfile] {
+        guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
+            throw NightscoutServiceError.URLFormationError
+        }
+        
+        let secret = sha1Secret()
+
+        let path = "/api/v1/profile.json"
+        urlComponents.path = path
+        
+        let url = urlComponents.url!
+        var request = HTTPClientRequest(url: url.absoluteString)
+        request.method = .GET
+        request.headers.add(name: "Content-Type", value: "application/json")
+        request.headers.add(name: "api-secret", value: secret)
+        
+        let response = try await httpClient.execute(request, timeout: .seconds(60))
+        let data = try await Data(buffer: response.body.collect(upTo: .max))
+            
+        let decoder = self.jsonDecoder()
+        return try decoder.decode([NightscoutProfile].self, from: data)
+    }
+    
     public func startOverride(overrideName: String, overrideDisplay: String, durationInMinutes: Int) async throws -> HTTPClientResponse {
         
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
