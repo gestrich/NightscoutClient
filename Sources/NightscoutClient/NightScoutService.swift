@@ -86,7 +86,9 @@ public class NightscoutService {
         
         let url = urlComponents.url!
         
-        let request = HTTPClientRequest(url: url.absoluteString)
+        var request = HTTPClientRequest(url: url.absoluteString)
+        request.headers.add(name: "api-secret", value: sha1Secret())
+        
         let response = try await httpClient.execute(request, timeout: .seconds(60))
         
         let data = try await Data(buffer: response.body.collect(upTo: .max))
@@ -141,7 +143,9 @@ public class NightscoutService {
         
         let url = urlComponents.url!
         
-        let request = HTTPClientRequest(url: url.absoluteString)
+        var request = HTTPClientRequest(url: url.absoluteString)
+        request.headers.add(name: "api-secret", value: sha1Secret())
+        
         let response = try await httpClient.execute(request, timeout: .seconds(60))
         
         let data = try await Data(buffer: response.body.collect(upTo: .max))
@@ -181,7 +185,9 @@ public class NightscoutService {
         
         let url = urlComponents.url!
         
-        let request = HTTPClientRequest(url: url.absoluteString)
+        var request = HTTPClientRequest(url: url.absoluteString)
+        request.headers.add(name: "api-secret", value: sha1Secret())
+        
         let response = try await httpClient.execute(request, timeout: .seconds(60))
         
         let data = try await Data(buffer: response.body.collect(upTo: .max))
@@ -223,8 +229,6 @@ public class NightscoutService {
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
             throw NightscoutServiceError.URLFormationError
         }
-        
-        let secret = sha1Secret()
 
         let path = "/api/v1/profile.json"
         urlComponents.path = path
@@ -233,7 +237,7 @@ public class NightscoutService {
         var request = HTTPClientRequest(url: url.absoluteString)
         request.method = .GET
         request.headers.add(name: "Content-Type", value: "application/json")
-        request.headers.add(name: "api-secret", value: secret)
+        request.headers.add(name: "api-secret", value: sha1Secret())
         
         let response = try await httpClient.execute(request, timeout: .seconds(60))
         let data = try await Data(buffer: response.body.collect(upTo: .max))
@@ -247,8 +251,6 @@ public class NightscoutService {
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
             throw NightscoutServiceError.URLFormationError
         }
-        
-        let secret = sha1Secret()
 
         let path = "/api/v2/notifications/loop"
         urlComponents.path = path
@@ -257,7 +259,7 @@ public class NightscoutService {
         var request = HTTPClientRequest(url: url.absoluteString)
         request.method = .POST
         request.headers.add(name: "Content-Type", value: "application/json")
-        request.headers.add(name: "api-secret", value: secret)
+        request.headers.add(name: "api-secret", value: sha1Secret())
 
         let jsonDict: [String: String] = [
             "reason":overrideName,
@@ -281,8 +283,6 @@ public class NightscoutService {
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
             throw NightscoutServiceError.URLFormationError
         }
-        
-        let secret = sha1Secret()
 
         let path = "/api/v2/notifications/loop"
         urlComponents.path = path
@@ -291,7 +291,7 @@ public class NightscoutService {
         var request = HTTPClientRequest(url: url.absoluteString)
         request.method = .POST
         request.headers.add(name: "Content-Type", value: "application/json")
-        request.headers.add(name: "api-secret", value: secret)
+        request.headers.add(name: "api-secret", value: sha1Secret())
 
         let jsonDict: [String: String] = [
             "eventType":"Temporary Override Cancel",
@@ -311,8 +311,6 @@ public class NightscoutService {
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
             throw NightscoutServiceError.URLFormationError
         }
-        
-        let secret = sha1Secret()
 
         let path = "/api/v2/notifications/loop"
         urlComponents.path = path
@@ -321,7 +319,7 @@ public class NightscoutService {
         var request = HTTPClientRequest(url: url.absoluteString)
         request.method = .POST
         request.headers.add(name: "Content-Type", value: "application/json")
-        request.headers.add(name: "api-secret", value: secret)
+        request.headers.add(name: "api-secret", value: sha1Secret())
 
         let jsonDict: [String: String] = [
             "eventType":"Remote Bolus Entry",
@@ -342,8 +340,6 @@ public class NightscoutService {
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
             throw NightscoutServiceError.URLFormationError
         }
-        
-        let secret = sha1Secret()
 
         let path = "/api/v2/notifications/loop"
         urlComponents.path = path
@@ -352,7 +348,7 @@ public class NightscoutService {
         var request = HTTPClientRequest(url: url.absoluteString)
         request.method = .POST
         request.headers.add(name: "Content-Type", value: "application/json")
-        request.headers.add(name: "api-secret", value: secret)
+        request.headers.add(name: "api-secret", value: sha1Secret())
 
         let jsonDict: [String: String] = [
             "eventType":"Remote Carbs Entry",
