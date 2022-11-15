@@ -221,7 +221,6 @@ public class NightscoutService {
         let sha1Data = secret.data(using: .utf8)!
         sha1.update(data: sha1Data)
         let digest = sha1.finalize()
-        print(digest.description)
         return String(digest.description.split(separator: " ").last ?? "")
     }
     
