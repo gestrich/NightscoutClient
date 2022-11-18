@@ -20,14 +20,14 @@ public class NightscoutService {
     
     public let baseURL: URL
     let secret: String
-    let referenceDate: Date
+    let nowDateProvider: () -> Date
     private let httpClient: AsyncHTTPClient.HTTPClient
     
-    public init(baseURL: URL, secret: String, referenceDate: Date){
+    public init(baseURL: URL, secret: String, nowDateProvider: @escaping () -> Date){
         
         self.baseURL = baseURL
         self.secret = secret
-        self.referenceDate = referenceDate
+        self.nowDateProvider = nowDateProvider
         
         let provider = AsyncHTTPClient.HTTPClient.EventLoopGroupProvider.createNew
         self.httpClient = AsyncHTTPClient.HTTPClient(eventLoopGroupProvider: provider)
@@ -41,7 +41,7 @@ public class NightscoutService {
     // curl -L -g '<baseURL>/api/v1/entries/sgv.json?find[dateString][$gte]=2020-12-29' | jq
     public func getEGVs(startDate inputStartDate: Date, endDate inputEndDate: Date?) async throws -> [NightscoutEGV] {
         var currStartDate = inputStartDate
-        let proposedEndDate = inputEndDate ?? referenceDate
+        let proposedEndDate = inputEndDate ?? nowDateProvider()
         var currEndDate = egvRequestEndDateFromProposedRange(startDate: currStartDate, endDate: proposedEndDate)
         var egvs = [NightscoutEGV]()
         while true {
@@ -126,7 +126,7 @@ public class NightscoutService {
             throw NightscoutServiceError.URLFormationError
         }
         
-        let endDate = endDate ?? referenceDate
+        let endDate = endDate ?? nowDateProvider()
         
         let startDateString = dateFormatter().string(from: startDate)
         let endDateString = dateFormatter().string(from: endDate)
@@ -170,7 +170,7 @@ public class NightscoutService {
             throw NightscoutServiceError.URLFormationError
         }
         
-        let endDate = endDate ?? referenceDate
+        let endDate = endDate ?? nowDateProvider()
         
         let startDateString = dateFormatter().string(from: startDate)
         let endDateString = dateFormatter().string(from: endDate)

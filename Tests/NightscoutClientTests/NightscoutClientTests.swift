@@ -3,7 +3,7 @@ import XCTest
 
 final class NightscoutClientTests: XCTestCase {
     
-    let service = NightscoutService(baseURL: URL(string: "https://gestrich-sugar-test.herokuapp.com")!, secret: "RS89JLJ9A6YR", referenceDate: Date())
+    let service = NightscoutService(baseURL: URL(string: "https://gestrich-sugar-test.herokuapp.com")!, secret: "RS89JLJ9A6YR", nowDateProvider: {Date()})
     
     func shutdown() throws {
         try service.syncShutdown()
