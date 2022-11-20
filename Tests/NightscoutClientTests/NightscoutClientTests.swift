@@ -14,7 +14,7 @@ final class NightscoutClientTests: XCTestCase {
 //        let profile = try await service.getProfiles()
 //        print(profile)
 //        try await service.deliverBolus(amountInUnits: 1.0, otp: 12345)
-        try await service.deliverCarbs(amountInGrams: 2, amountInHours: 3, otp: 12345)
+        let _ = try await service.deliverCarbs(amountInGrams: 2, amountInHours: 3, otp: 12345)
         try service.syncShutdown()
     }
 }

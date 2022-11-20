@@ -1,5 +1,5 @@
 //
-//  CarbEntry.swift
+//  WGCarbEntry.swift
 //  
 //
 //  Created by Bill Gestrich on 12/21/20.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CarbEntry {
+public struct WGCarbEntry {
     public let date: Date
     public let amount: Int
 }

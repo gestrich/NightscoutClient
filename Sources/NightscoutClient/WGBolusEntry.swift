@@ -1,5 +1,5 @@
 //
-//  BolusEntry.swift
+//  WGBolusEntry.swift
 //  
 //
 //  Created by Bill Gestrich on 12/21/20.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct BolusEntry {
+public struct WGBolusEntry {
     public let date: Date
     public let amount: Float
 }

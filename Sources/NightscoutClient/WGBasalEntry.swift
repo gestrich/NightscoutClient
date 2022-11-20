@@ -1,5 +1,5 @@
 //
-//  BasalEntry.swift
+//  WGBasalEntry.swift
 //  
 //
 //  Created by Bill Gestrich on 12/21/20.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct BasalEntry {
+public struct WGBasalEntry {
     public let date: Date
     public let duration: Float
     public let rate: Float

@@ -204,15 +204,15 @@ public class NightscoutService {
         return deviceStatuses
     }
     
-    public func getBasalTreatments(startDate: Date, endDate: Date?) async throws -> [BasalEntry] {
+    public func getBasalTreatments(startDate: Date, endDate: Date?) async throws -> [WGBasalEntry] {
         return try await self.getTreatments(startDate: startDate, endDate: endDate).basalEntries
     }
     
-    public func getBolusTreatments(startDate: Date, endDate: Date?) async throws -> [BolusEntry] {
+    public func getBolusTreatments(startDate: Date, endDate: Date?) async throws -> [WGBolusEntry] {
         return try await self.getTreatments(startDate: startDate, endDate: endDate).bolusEntries
     }
     
-    public func getCarbTreatments(startDate: Date, endDate: Date?) async throws -> [CarbEntry] {
+    public func getCarbTreatments(startDate: Date, endDate: Date?) async throws -> [WGCarbEntry] {
         return try await self.getTreatments(startDate: startDate, endDate: endDate).carbEntries
     }
     
@@ -635,17 +635,17 @@ public struct NightscoutTreatmentJSON: Codable {
     let insulin: Float?//null
     
 
-    func basalEntry() -> BasalEntry? {
+    func basalEntry() -> WGBasalEntry? {
         guard eventType == "Temp Basal" else {
             return nil
         }
         
-        return BasalEntry(date: created_at, duration: duration ?? 0.0, rate: rate ?? 0.0, amount: amount ?? 0.0)
+        return WGBasalEntry(date: created_at, duration: duration ?? 0.0, rate: rate ?? 0.0, amount: amount ?? 0.0)
         
         
     }
     
-    func bolusEntry() -> BolusEntry? {
+    func bolusEntry() -> WGBolusEntry? {
         guard eventType == "Correction Bolus" else {
             return nil
         }
@@ -654,10 +654,10 @@ public struct NightscoutTreatmentJSON: Codable {
             return nil
         }
         
-        return BolusEntry(date: created_at, amount: insulin)
+        return WGBolusEntry(date: created_at, amount: insulin)
     }
     
-    func carbEntry() -> CarbEntry? {
+    func carbEntry() -> WGCarbEntry? {
         
         //guard eventType == "Meal Bolus" else { //Loop master seems to give a different value than dev
         guard eventType == "Carb Correction" else { //dev
@@ -665,21 +665,21 @@ public struct NightscoutTreatmentJSON: Codable {
         }
         
         //TODO: Not sure about the time.
-        return CarbEntry(date: created_at, amount: carbs ?? 0)
+        return WGCarbEntry(date: created_at, amount: carbs ?? 0)
     }
     
 }
 
 public struct NightscoutTreatmentResult {
     
-    public let basalEntries: [BasalEntry]
-    public let bolusEntries: [BolusEntry]
-    public let carbEntries: [CarbEntry]
+    public let basalEntries: [WGBasalEntry]
+    public let bolusEntries: [WGBolusEntry]
+    public let carbEntries: [WGCarbEntry]
 
     static func getTreatmentResult(jsonObjects: [NightscoutTreatmentJSON]) -> NightscoutTreatmentResult {
-        var basalEntries = [BasalEntry]()
-        var bolusEntries = [BolusEntry]()
-        var carbEntries = [CarbEntry]()
+        var basalEntries = [WGBasalEntry]()
+        var bolusEntries = [WGBolusEntry]()
+        var carbEntries = [WGCarbEntry]()
         
         for jsonObj in jsonObjects {
 
