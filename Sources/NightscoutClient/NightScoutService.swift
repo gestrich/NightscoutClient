@@ -739,6 +739,7 @@ public struct NightscoutLoopStatus: Codable {
     public let timestamp: Date
     public let name: String
     public let version: String
+    public let predicted: LoopPredictedGlucose?
     public let recommendedBolus: Float?
 }
 
@@ -759,6 +760,10 @@ public struct NightscoutOverride: Codable {
 public struct NightscoutCorrectionRange: Codable {
     public let minValue: Int
     public let maxValue: Int
+}
+
+public struct LoopPredictedGlucose: Codable {
+    let values: [Float]?
 }
 
 
