@@ -763,6 +763,7 @@ public struct NightscoutCorrectionRange: Codable {
 }
 
 public struct LoopPredictedGlucose: Codable {
+    public let startDate: Date
     public let values: [Float]?
 }
 
