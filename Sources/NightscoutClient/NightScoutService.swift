@@ -9,6 +9,7 @@ import Foundation
 import AsyncHTTPClient
 import NIO //For ByteBuffer
 import Crypto
+import NIOFoundationCompat
 
 #if canImport(FoundationNetworking)
 import FoundationNetworking
