@@ -50,8 +50,8 @@ public struct NightscoutLoopStatus: Codable {
     public let name: String
     public let version: String
     public let predicted: LoopPredictedGlucose?
-    public let cob: WGLoopCOB
-    public let iob: WGLoopIOB
+    public let cob: WGLoopCOB?
+    public let iob: WGLoopIOB?
     public let recommendedBolus: Float?
 }
 
