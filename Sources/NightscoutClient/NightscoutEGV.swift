@@ -8,6 +8,7 @@
 import Foundation
 
 public struct NightscoutEGV {
+    public let _id: String
     public let value: Int
     public let systemTime: Date
     public let displayTime: Date
@@ -16,7 +17,8 @@ public struct NightscoutEGV {
     public let trendRate: Float?
     public let trendDescription: String
     
-    public init(value: Int, systemTime: Date, displayTime: Date, realtimeValue: Int?, smoothedValue: Int?, trendRate: Float?, trendDescription: String){
+    public init(id: String, value: Int, systemTime: Date, displayTime: Date, realtimeValue: Int?, smoothedValue: Int?, trendRate: Float?, trendDescription: String){
+        self._id = id
         self.value = value
         self.systemTime = systemTime
         self.displayTime = displayTime

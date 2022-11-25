@@ -465,7 +465,7 @@ public struct NightscoutEntryJSON: Codable {
                 floatTrend = 4
             }
         }
-        return NightscoutEGV(value: sgv, systemTime: sysTime, displayTime: sysTime, realtimeValue: nil, smoothedValue: nil, trendRate: floatTrend, trendDescription: "")
+        return NightscoutEGV(id: _id, value: sgv, systemTime: sysTime, displayTime: sysTime, realtimeValue: nil, smoothedValue: nil, trendRate: floatTrend, trendDescription: "")
     }
     
     
