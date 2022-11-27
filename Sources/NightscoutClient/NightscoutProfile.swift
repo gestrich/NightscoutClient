@@ -35,7 +35,15 @@ public struct NightscoutLoopStoreBasal: Codable {
 public struct NightscoutOverridePreset: Codable {
     public let name: String
     public let symbol: String
-    public let duration: Int
+    public let duration: Int //in seconds
+    
+    public var durationInSeconds: Int {
+        return duration
+    }
+    
+    public var durationInMinutes: Int {
+        return duration / 60
+    }
 }
         
         
