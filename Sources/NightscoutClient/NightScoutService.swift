@@ -335,7 +335,7 @@ public class NightscoutService {
         return try await httpClient.execute(request, timeout: .seconds(60))
     }
     
-    public func deliverCarbs(amountInGrams: Int, amountInHours: Float, otp: Int) async throws -> HTTPClientResponse {
+    public func deliverCarbs(amountInGrams: Int, amountInHours: Float, consumedDate: Date?, otp: Int) async throws -> HTTPClientResponse {
         
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
             throw NightscoutServiceError.URLFormationError
@@ -350,12 +350,18 @@ public class NightscoutService {
         request.headers.add(name: "Content-Type", value: "application/json")
         request.headers.add(name: "api-secret", value: sha1Secret())
 
-        let jsonDict: [String: String] = [
+        var jsonDict: [String: String] = [
             "eventType":"Remote Carbs Entry",
             "remoteCarbs":"\(amountInGrams)",
             "remoteAbsorption":"\(amountInHours)",
             "otp":"\(otp)"
         ]
+        
+        if let consumedDate {
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions =  [.withInternetDateTime, .withFractionalSeconds]
+            jsonDict["created_at"] = formatter.string(from: consumedDate)
+        }
         
         let postData = try! JSONEncoder().encode(jsonDict)
         let postLength = "\(postData.count)"
