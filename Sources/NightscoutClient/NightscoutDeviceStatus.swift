@@ -70,8 +70,8 @@ public struct NightscoutOverride: Codable {
 }
 
 public struct NightscoutCorrectionRange: Codable {
-    public let minValue: Int
-    public let maxValue: Int
+    public let minValue: Double
+    public let maxValue: Double
 }
 
 public struct LoopPredictedGlucose: Codable {
