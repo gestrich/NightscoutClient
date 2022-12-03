@@ -306,7 +306,7 @@ public class NightscoutService {
         return try await httpClient.execute(request, timeout: .seconds(60))
     }
     
-    public func deliverBolus(amountInUnits: Double, otp: Int) async throws -> HTTPClientResponse {
+    public func deliverBolus(amountInUnits: Double, otp: String) async throws -> HTTPClientResponse {
         
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
             throw NightscoutServiceError.URLFormationError
@@ -324,7 +324,7 @@ public class NightscoutService {
         let jsonDict: [String: String] = [
             "eventType":"Remote Bolus Entry",
             "remoteBolus":"\(amountInUnits)",
-            "otp":"\(otp)"
+            "otp":otp
         ]
         
         let postData = try! JSONEncoder().encode(jsonDict)
@@ -335,7 +335,7 @@ public class NightscoutService {
         return try await httpClient.execute(request, timeout: .seconds(60))
     }
     
-    public func deliverCarbs(amountInGrams: Double, amountInHours: Float, consumedDate: Date? = nil, otp: Int) async throws -> HTTPClientResponse {
+    public func deliverCarbs(amountInGrams: Double, amountInHours: Float, consumedDate: Date? = nil, otp: String) async throws -> HTTPClientResponse {
         
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
             throw NightscoutServiceError.URLFormationError
@@ -354,7 +354,7 @@ public class NightscoutService {
             "eventType":"Remote Carbs Entry",
             "remoteCarbs":"\(amountInGrams)",
             "remoteAbsorption":"\(amountInHours)",
-            "otp":"\(otp)"
+            "otp":otp
         ]
         
         if let consumedDate {
