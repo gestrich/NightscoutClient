@@ -335,7 +335,7 @@ public class NightscoutService {
         return try await httpClient.execute(request, timeout: .seconds(60))
     }
     
-    public func deliverCarbs(amountInGrams: Int, amountInHours: Float, consumedDate: Date? = nil, otp: Int) async throws -> HTTPClientResponse {
+    public func deliverCarbs(amountInGrams: Double, amountInHours: Float, consumedDate: Date? = nil, otp: Int) async throws -> HTTPClientResponse {
         
         guard var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
             throw NightscoutServiceError.URLFormationError
